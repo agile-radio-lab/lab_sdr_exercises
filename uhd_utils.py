@@ -1,6 +1,7 @@
 import json
 import uhd
 
+
 class USRPParams:
     _params = {
         "sampling_rate": 1e6,
@@ -24,27 +25,33 @@ class USRPParams:
         with open(path, "r") as f:
             self._params = json.load(f)
 
+
 def init_usrp_rx(params: USRPParams) -> uhd.usrp.MultiUSRP:
     channel_id = params.get_param("channel")
 
     usrp = uhd.usrp.MultiUSRP()
     usrp.set_rx_rate(params.get_param("sampling_rate"), channel_id)
-    usrp.set_rx_freq(uhd.types.TuneRequest(params.get_param("freq")), channel_id)
+    usrp.set_rx_freq(uhd.types.TuneRequest(
+        params.get_param("freq")), channel_id)
     usrp.set_rx_gain(params.get_param("gain"), channel_id)
     return usrp
+
 
 def init_usrp_streamer_rx(usrp: uhd.usrp.MultiUSRP) -> uhd.libpyuhd.usrp.rx_streamer:
     st_args = uhd.usrp.StreamArgs("fc32", "sc16")
     return usrp.get_rx_stream(st_args)
+
 
 def init_usrp_tx(params: USRPParams) -> uhd.usrp.MultiUSRP:
     channel_id = params.get_param("channel")
 
     usrp = uhd.usrp.MultiUSRP()
     usrp.set_tx_rate(params.get_param("sampling_rate"), channel_id)
-    usrp.set_tx_freq(uhd.types.TuneRequest(params.get_param("freq")), channel_id)
+    usrp.set_tx_freq(uhd.types.TuneRequest(
+        params.get_param("freq")), channel_id)
     usrp.set_tx_gain(params.get_param("gain"), channel_id)
     return usrp
+
 
 def init_usrp_streamer_tx(usrp: uhd.usrp.MultiUSRP) -> uhd.libpyuhd.usrp.tx_streamer:
     st_args = uhd.usrp.StreamArgs("fc32", "sc16")

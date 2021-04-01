@@ -13,38 +13,48 @@ DEFAULT_N_SAMPLES = 100
 DEFAULT_PULSE_WIDTH = 10/3
 DEFAULT_SEQ_PATH = "sample.seq.json"
 
-ZADOFF_CHU_ROOTS = [25,29,34]
+ZADOFF_CHU_ROOTS = [25, 29, 34]
 PSS_LENGTH = 61
+
 
 def seq_ones(n_samples: int) -> np.array:
     return np.ones(n_samples)
 
+
 def seq_zeros(n_samples: int) -> np.array:
     return np.zeros(n_samples)
+
 
 def seq_rectangular(n_samples: int, period: float, pulse_width: float) -> np.array:
     rect = np.arange(n_samples) % period < pulse_width
     return [float(sample) for sample in rect]
 
+
 def seq_exp(t: np.array, freq: float, amp: float) -> np.array:
     return amp*np.exp(2j*np.pi*freq*t)
+
 
 def seq_negative_exp(t: np.array, freq: float, amp: float) -> np.array:
     return amp*np.exp(-2j*np.pi*freq*t)
 
+
 def seq_cos(t: np.array, freq: float, amp: float) -> np.array:
     return amp*np.cos(2*np.pi*freq*t)
+
 
 def seq_cos_sq(t: np.array, freq: float, amp: float) -> np.array:
     cos_samples = seq_cos(t, freq, amp)
     return cos_samples**2
 
+
 def seq_pss(root_id: int = 0) -> np.array:
     root = ZADOFF_CHU_ROOTS[root_id]
     pss_seq = np.arange(PSS_LENGTH, dtype=complex)
     pss_seq[:31] = np.exp((-1j*np.pi*root*pss_seq[:31]*(pss_seq[:31]+1))/63)
-    pss_seq[31:62] = np.exp((-1j*np.pi*root*(pss_seq[31:62]+1)*(pss_seq[31:62]+2))/63)
+    pss_seq[31:62] = np.exp(
+        (-1j*np.pi*root*(pss_seq[31:62]+1)*(pss_seq[31:62]+2))/63)
     return pss_seq
+
 
 seqs = {
     "ones": seq_ones,
@@ -96,11 +106,10 @@ if __name__ == "__main__":
                         help=f'period')
     parser.add_argument('--n-samples', type=int, default=DEFAULT_N_SAMPLES,
                         help=f'source freq')
-                        
+
     parser.add_argument('--pulse-width', type=float, default=DEFAULT_PULSE_WIDTH,
                         help=f'pulse width')
 
     args = parser.parse_args()
 
     main(args)
-

@@ -30,9 +30,10 @@ def main(args: argparse.Namespace):
     ax[3].plot(fft_result.real)
     plt.show()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Analyser Protocol Script')
-    
+
     parser.add_argument('--input', type=str, default=DEFAULT_SIGNAL_PATH,
                         help=f'path to input signal file')
     parser.add_argument('--fft-size', type=int, default=DEFAULT_FFT_SIZE,

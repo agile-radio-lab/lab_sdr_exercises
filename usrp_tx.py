@@ -33,7 +33,7 @@ def main(args: argparse.Namespace):
 
     if sleep_time > 0:
         next_sleep_time = time.time() + tx_time
-    
+
     running = True
     metadata = uhd.types.TXMetadata()
     while running:
@@ -47,13 +47,13 @@ def main(args: argparse.Namespace):
             running = False
             print("Exiting...")
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='TX Protocol Script')
     parser.add_argument('--input', type=str, default=DEFAULT_SIGNAL_PATH,
                         help=f'path to input signal file')
     parser.add_argument('--config', type=str, default=DEFAULT_USRP_CONFIG_PATH,
                         help=f'path to USRP configuration file')
-
 
     parser.add_argument('--sleep-time', type=float, default=DEFAULT_SLEEP_TIME,
                         help=f'path to USRP configuration file')
@@ -63,4 +63,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
-

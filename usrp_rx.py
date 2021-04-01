@@ -45,7 +45,8 @@ def main(args: argparse.Namespace):
 
             if time.time() > start_rx_time and n_recv:
                 n_write = min(args.n_samples - n_total_recv, n_recv)
-                samples[:, n_total_recv:n_total_recv + n_write] = buffer[:, 0:n_write]
+                samples[:, n_total_recv:n_total_recv +
+                        n_write] = buffer[:, 0:n_write]
                 n_total_recv += n_write
         except KeyboardInterrupt:
             running = False
@@ -69,7 +70,6 @@ if __name__ == "__main__":
     parser.add_argument('--recording-delay', type=float, default=DEFAULT_RECORDING_DELAY,
                         help=f'recording delay')
 
-                        
     args = parser.parse_args()
 
     main(args)
