@@ -2,14 +2,6 @@
 """ Sequence generator to json
 """
 
-__author__ = "Igor Kim"
-__credits__ = ["Igor Kim"]
-__maintainer__ = "Igor Kim"
-__email__ = "igor.skh@gmail.com"
-__status__ = "Development"
-__date__ = "04/2021"
-__license__ = ""
-
 import argparse
 import numpy as np
 
