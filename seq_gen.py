@@ -13,6 +13,8 @@ DEFAULT_N_SAMPLES = 100
 DEFAULT_PULSE_WIDTH = 10/3
 DEFAULT_SEQ_PATH = "sample.seq.json"
 
+ZADOFF_CHU_ROOTS = [25,29,34]
+PSS_LENGTH = 61
 
 def seq_ones(n_samples: int) -> np.array:
     return np.ones(n_samples)
@@ -33,6 +35,16 @@ def seq_negative_exp(t: np.array, freq: float, amp: float) -> np.array:
 def seq_cos(t: np.array, freq: float, amp: float) -> np.array:
     return amp*np.cos(2*np.pi*freq*t)
 
+def seq_cos_sq(t: np.array, freq: float, amp: float) -> np.array:
+    cos_samples = seq_cos(t, freq, amp)
+    return cos_samples**2
+
+def seq_pss(root_id: int = 0) -> np.array:
+    root = ZADOFF_CHU_ROOTS[root_id]
+    pss_seq = np.arange(PSS_LENGTH, dtype=complex)
+    pss_seq[:31] = np.exp((-1j*np.pi*root*pss_seq[:31]*(pss_seq[:31]+1))/63)
+    pss_seq[31:62] = np.exp((-1j*np.pi*root*(pss_seq[31:62]+1)*(pss_seq[31:62]+2))/63)
+    return pss_seq
 
 seqs = {
     "ones": seq_ones,
@@ -40,7 +52,9 @@ seqs = {
     "rectangular": seq_rectangular,
     "exp": seq_exp,
     "negative_exp": seq_negative_exp,
-    "cos": seq_cos
+    "cos": seq_cos,
+    "cos_sq": seq_cos_sq,
+    "pss": seq_pss
 }
 seq_types = list(seqs.keys())
 seq_types_str = ", ".join(seq_types)
@@ -55,7 +69,7 @@ def main(args: argparse.Namespace):
     generator = seqs[args.seq]
     samples: np.array = None
 
-    if args.seq in ["exp", "negative_exp", "cos"]:
+    if args.seq in ["exp", "negative_exp", "cos", "cos_sq"]:
         freq = 1 / args.period
         t = np.arange(args.n_samples, dtype=complex)
         samples = generator(t, freq, args.amplitude)
@@ -63,6 +77,8 @@ def main(args: argparse.Namespace):
         samples = generator(args.n_samples)
     elif args.seq in ["rectangular"]:
         samples = generator(args.n_samples, args.period, args.pulse_width)
+    elif args.seq in ["pss"]:
+        samples = generator()
 
     utils.export_json(samples, args.output)
 
