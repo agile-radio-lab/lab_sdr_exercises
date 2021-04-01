@@ -54,7 +54,7 @@ def main(args: argparse.Namespace):
     stream_cmd = uhd.types.StreamCMD(uhd.types.StreamMode.stop_cont)
     streamer.issue_stream_cmd(stream_cmd)
 
-    samples = np.array(samples[0], dtype=np.complex)
+    samples = np.array(samples[0], dtype=complex)
     utils.export_json(samples, args.output)
 
 

@@ -57,7 +57,7 @@ def main(args: argparse.Namespace):
 
     if args.seq in ["exp", "negative_exp", "cos"]:
         freq = 1 / args.period
-        t = np.arange(args.n_samples, dtype=np.complex)
+        t = np.arange(args.n_samples, dtype=complex)
         samples = generator(t, freq, args.amplitude)
     elif args.seq in ["ones", "zeros"]:
         samples = generator(args.n_samples)
