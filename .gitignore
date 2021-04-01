@@ -1,0 +1,7 @@
+*.pyc
+__pycache__
+
+# sample files
+signals
+recording.seq.json
+sample.seq.json
