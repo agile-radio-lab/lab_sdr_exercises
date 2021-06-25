@@ -2,15 +2,15 @@
 
 ## List of Command Line Applications
 * Sequence Generator
-* Sequence Analyser
-* USRP Transmitter
-* USRP Receiver
+* Sequence Analyser 
+* USRP Transmitter 
+* USRP Receiver 
 
 ## Sequence generator
 Supported shapes, argument `--seq shape_type` and additional parameters
 * ones, zeros: `--n-samples`
-* rectangular: `--n-samples`, `--period`, `--pulse-width`
-* exp, negative_exp, cos: `--n-samples`, `--period`, `--amplitude`
+* rectangular: `--n-samples`, `--period`, `--pulse-duration`
+* exp, negative_exp, cos, cos_sq: `--n-samples`, `--period`, `--amplitude`
 
 Usage:
 ```bash
@@ -23,6 +23,11 @@ Generate all sequence samples:
 ```
 
 ## Sequence Analyser
+Supported Plots: 
+* Real and Imaginary Plots
+* I/Q Plot
+* FFT Plot
+
 Usage:
 ```bash
 python3 analyser.py --input sample.seq.json

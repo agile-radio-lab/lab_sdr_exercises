@@ -28,6 +28,13 @@ def seq_negative_exp(t: np.array, freq: float, amp: float) -> np.array:
 def seq_cos(t: np.array, freq: float, amp: float) -> np.array:
     return amp*np.cos(2*np.pi*freq*t)
 
+def seq_sin(t: np.array, freq: float, amp: float) -> np.array:
+    return amp*np.sin(2*np.pi*freq*t)
+
+
+def seq_cos_m(t: np.array, freq: float, amp: float, m: float) -> np.array:
+    return amp*(1+m*np.cos(2*np.pi*freq*t))
+
 
 def seq_cos_sq(t: np.array, freq: float, amp: float) -> np.array:
     cos_samples = seq_cos(t, freq, amp)
@@ -51,7 +58,9 @@ SEQS = {
     "negative_exp": seq_negative_exp,
     "cos": seq_cos,
     "cos_sq": seq_cos_sq,
-    "pss": seq_pss
+    "pss": seq_pss,
+    "cos_m": seq_cos_m,
+    "sin":seq_sin
 }
 SEQ_TYPES = list(SEQS.keys())
 SEQ_TYPES_STR = ", ".join(SEQ_TYPES)
