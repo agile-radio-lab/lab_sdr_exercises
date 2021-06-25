@@ -20,15 +20,40 @@ def main(args: argparse.Namespace):
     if args.n_samples > 0:
         samples = samples[args.offset:args.offset+args.n_samples]
 
-    fft_result = dsp_utils.fft(samples, args.fft_size)
+    
+    fig = plt.figure(figsize=(10, 10))
 
-    fig, ax = plt.subplots(1, 4)
-    ax[0].plot(samples.real)
-    ax[1].plot(samples.imag)
+    
+    # Real
+    ax = plt.subplot(2, 2, 1)
+    plt.plot(samples.real,".")
+    plt.ylabel("Real")
+    #plt.xlabel("N-Samples")
+    plt.grid(True)
 
-    ax[2].scatter(samples.real, samples.imag)
-    ax[3].plot(fft_result.real)
-    plt.show()
+
+    # Imaginary
+    ax = plt.subplot(2, 2, 3)
+    plt.plot(samples.imag,".")
+    plt.ylabel("Imaginary")
+    plt.xlabel("N-Samples")
+    plt.grid(True)
+
+
+    # Z-Plane 
+    ax = plt.subplot(2, 2, 2)
+    plt.plot(samples.real, samples.imag, "r.")
+    plt.xlabel("In-Phase")
+    plt.ylabel("Quadrature")
+    plt.grid(True)
+
+
+    # FFT
+    ax = plt.subplot(2, 2, 4)
+    fft_result_pss = dsp_utils.calc_fft_psd(samples.real, samples.imag, args.fft_size)
+    plt.plot(fft_result_pss.real)#, ".")
+    plt.xlabel("FFT size")
+    plt.grid(True)
 
 
 if __name__ == "__main__":
