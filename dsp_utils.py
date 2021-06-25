@@ -25,4 +25,3 @@ def calc_fft_psd(real,imag,fft_size):
         bins = psd(samples[i*fft_size:(i+1)*fft_size],fft_size)
         freq_result[i] = bins
     return np.mean(freq_result, axis=0)
-    

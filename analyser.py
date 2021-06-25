@@ -34,7 +34,6 @@ def main(args: argparse.Namespace):
 
     # Imaginary
     ax = plt.subplot(2, 2, 3)
-
     plt.plot(samples.imag,".")
     plt.ylabel("Imaginary")
     plt.xlabel("N-Samples")
@@ -43,11 +42,7 @@ def main(args: argparse.Namespace):
 
     # Z-Plane 
     ax = plt.subplot(2, 2, 2)
-
     plt.plot(samples.real, samples.imag, "r.")
-    #plt.xlim(-1,1)
-    #plt.ylim(-1,1)
-
     plt.xlabel("In-Phase")
     plt.ylabel("Quadrature")
     plt.grid(True)
@@ -55,26 +50,10 @@ def main(args: argparse.Namespace):
 
     # FFT
     ax = plt.subplot(2, 2, 4)
-
     fft_result_pss = dsp_utils.calc_fft_psd(samples.real, samples.imag, args.fft_size)
     plt.plot(fft_result_pss.real)#, ".")
     plt.xlabel("FFT size")
     plt.grid(True)
-
-    # if args.input == "signals/pss.seq.json":
-    #     fft_result_pss = dsp_utils.fft(samples, args.fft_size)
-    #     plt.plot(fft_result_pss.real)
-    #     plt.xlabel("FFT size")
-    #     plt.grid(True)
-    # elif args.input in ["signals/ones.seq.json", "signals/zeros.seq.json", "signals/rectangular.seq.json" or "signals/exp.seq.json" or "signals/negative_exp.seq.json", "signals/cos.seq.json", "signals/cos_sq.seq.json"]:
-    #     fft_result = dsp_utils.calc_fft_psd(samples.real,samples.imag, args.fft_size)
-    #     plt.plot(fft_result.real)
-    #     plt.xlabel("FFT size")
-    #     plt.ylabel("Magnitude")
-    #     plt.grid(True)
-        
-
-    plt.show()
 
 
 if __name__ == "__main__":
