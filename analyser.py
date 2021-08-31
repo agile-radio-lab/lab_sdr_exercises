@@ -54,8 +54,9 @@ def main(args: argparse.Namespace):
     plt.plot(fft_result_pss.real)#, ".")
     plt.xlabel("FFT size")
     plt.grid(True)
-
-
+    
+    plt.show()
+   
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Analyser Protocol Script')
 
